@@ -27,7 +27,7 @@ describe("VerifyTokenService", () => {
 
     expect(httpClient.request).toHaveBeenCalledWith(
       "/sms/otp/verify",
-      { method: "POST", data: payload }
+      { method: "POST", data: payload, authLocation: 'body', }
     );
     expect(result).toEqual(mockResponse);
   });

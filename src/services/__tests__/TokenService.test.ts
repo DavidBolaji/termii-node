@@ -38,6 +38,7 @@ describe("TokenService", () => {
     expect(httpClient.request).toHaveBeenCalledWith("/sms/otp/send", {
       method: "POST",
       data: payload,
+      authLocation: 'body',
     });
     expect(result).toEqual(mockResponse);
   });
@@ -66,6 +67,7 @@ describe("TokenService", () => {
     expect(httpClient.request).toHaveBeenCalledWith("/sms/otp/send/voice", {
       method: "POST",
       data: payload,
+      authLocation: 'body',
     });
     expect(result).toEqual(mockResponse);
   });
