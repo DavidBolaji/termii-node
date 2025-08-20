@@ -39,11 +39,12 @@ export class TokenService {
    * @returns Expanded `SendTokenResponse` containing PIN details
    */
   async sendToken(
-    payload: SendTokenRequest
+    payload: Expand<SendTokenRequest>
   ): Promise<Expand<SendTokenResponse>> {
     return this.http.request<Expand<SendTokenResponse>>("/sms/otp/send", {
       method: "POST",
-      data: payload
+      data: payload,
+      authLocation: "body"
     });
   }
 
@@ -54,13 +55,14 @@ export class TokenService {
    * @returns Expanded `VoiceTokenResponse` with OTP call details
    */
   async sendVoiceToken(
-    payload: VoiceTokenRequest
+    payload: Expand<VoiceTokenRequest>
   ): Promise<Expand<VoiceTokenResponse>> {
     return this.http.request<Expand<VoiceTokenResponse>>(
       "/sms/otp/send/voice",
       {
         method: "POST",
-        data: payload
+        data: payload,
+        authLocation: "body"
       }
     );
   }
@@ -72,16 +74,15 @@ export class TokenService {
    * @returns Expanded `VoiceCallResponse` with call status
    */
   async sendVoiceCall(
-    payload: VoiceCallRequest
+    payload: Expand<VoiceCallRequest>
   ): Promise<Expand<VoiceCallResponse>> {
     return this.http.request<Expand<VoiceCallResponse>>(
       "/sms/otp/send/call",
       {
         method: "POST",
-        data: payload
+        data: payload,
+        authLocation: "body"
       }
     );
   }
-
-  
 }

@@ -13,7 +13,6 @@ describe("VerifyTokenService", () => {
 
   it("verifies a token successfully", async () => {
     const payload: VerifyTokenRequest = {
-      api_key: "key",
       pin_id: "pin1",
       pin: "1234",
     };

@@ -68,20 +68,20 @@ export interface PaginatedData<T> {
   to: number;
 }
 // // Re-export all type modules
-// export * from './balanceService.types';
-// export * from './campaignService.type';
-// export * from './contactService.type';
-// export * from './emailTokenService.type';
-// export * from './eSimService.type';
-// export * from './eventService.type';
-// export * from './historyService.type';
-// export * from './inAppTokenService.types';
-// export * from './incomingService.type';
-// export * from './messageService.type';
-// export * from './phonebookService.type';
-// export * from './searchService.types';
-// export * from './senderService.type';
-// export * from './statusRequestService.type';
-// export * from './templateService.type';
-// export * from './tokenService.type';
-// export * from './verifyTokenService.types';
+export * from './balanceService.types';
+export * from './campaignService.type';
+export * from './contactService.type';
+export * from './emailTokenService.type';
+export * from './eSimService.type';
+export * from './eventService.type';
+export * from './historyService.type';
+export * from './inAppTokenService.types';
+export * from './incomingService.type';
+export * from './messageService.type';
+export * from './phonebookService.type';
+export * from './searchService.types';
+export * from './senderService.type';
+export * from './statusRequestService.type';
+export * from './templateService.type';
+export * from './tokenService.type';
+export * from './verifyTokenService.types';

@@ -21,7 +21,7 @@ export class InAppTokenService {
    * @returns Expanded `InAppTokenResponse` with OTP details
    */
   async generate(
-    payload: InAppTokenRequest
+    payload: Expand<InAppTokenRequest>
   ): Promise<Expand<InAppTokenResponse>> {
     return this.http.request<Expand<InAppTokenResponse>>(
       "/sms/otp/generate",

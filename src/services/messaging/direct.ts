@@ -6,6 +6,8 @@ import { SenderIdService } from "./SenderIdService";
 import { TokenService } from "../token/TokenService";
 import { InsightService } from "../insights/InsightService";
 import { SotelService } from "../sotel/SotelService";
+import { EmailTokenService } from "../token/EmailTokenService"; // Import EmailTokenService
+import { VerifyTokenService } from "../token/VerifyTokenService"; // Import VerifyTokenService
 
 import {
   SendMessageRequest,
@@ -38,6 +40,13 @@ import {
   QrCodeResponse,
   UsageResponse,
 } from "../../types/eSimService.type";
+import { InAppTokenRequest, InAppTokenResponse, SendEmailTokenRequest, SendEmailTokenResponse, VerifyTokenRequest, VerifyTokenResponse } from "../../types";
+
+/**
+ * Utility type that forces TypeScript to expand an interface
+ * so IntelliSense shows its full shape instead of just the alias.
+ */
+type Expand<T> = { [K in keyof T]: T[K] } & {};
 
 /**
  * Singleton HttpClient instance and API key storage
@@ -74,7 +83,7 @@ function getHttpClient(): HttpClient {
  * @returns Promise resolving to SendMessageResponse
  */
 export async function sendMessage(
-  payload: SendMessageRequest
+  payload: Expand<SendMessageRequest>
 ): Promise<SendMessageResponse> {
   const service = new MessageService(getHttpClient());
   return service.sendMessage(payload);
@@ -86,7 +95,7 @@ export async function sendMessage(
  * @returns Promise resolving to SendBulkMessageResponse
  */
 export async function sendBulkMessage(
-  payload: SendBulkMessageRequest
+  payload: Expand<SendBulkMessageRequest>
 ): Promise<SendBulkMessageResponse> {
   const service = new MessageService(getHttpClient());
   return service.sendBulkMessage(payload);
@@ -98,7 +107,7 @@ export async function sendBulkMessage(
  * @returns Promise resolving to SendTemplateResponse
  */
 export async function sendTemplate(
-  payload: SendTemplateRequest
+  payload: Expand<SendTemplateRequest>
 ): Promise<SendTemplateResponse> {
   const service = new TemplatesService(getHttpClient());
   return service.sendTemplate(payload);
@@ -110,7 +119,7 @@ export async function sendTemplate(
  * @returns Promise resolving to SendCampaignResponse
  */
 export async function sendCampaign(
-  payload: SendCampaignRequest
+  payload: Expand<SendCampaignRequest>
 ): Promise<SendCampaignResponse> {
   const service = new CampaignService(getHttpClient());
   // The CampaignService does not have sendCampaign method, use 'campaign' property or correct method
@@ -122,6 +131,58 @@ export async function sendCampaign(
   }
   throw new Error("sendCampaign method not found on CampaignService");
 }
+
+  export async function fetchCampaignHistory(campaignId: string): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.campaign.fetchCampaignHistory(campaignId);
+  }
+
+  export async function retryCampaign(campaignId: string): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.campaign.retryCampaign(campaignId);
+  }
+
+  // Contact methods
+  export async function fetchContacts(phonebookId: string): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.contact.fetchContacts(phonebookId);
+  }
+
+  export async function addContact(phonebookId: string, contact: any): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.contact.addContact(phonebookId, contact);
+  }
+
+  export async function uploadContacts(request: any): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.contact.uploadContacts(request);
+  }
+
+  export async function deleteContact(contactId: string): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.contact.deleteContact(contactId);
+  }
+
+  // Phonebook methods
+  export async function fetchPhonebooks(): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.phonebook.fetchPhonebooks();
+  }
+
+  export async function createPhonebook(payload: any): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.phonebook.createPhonebook(payload);
+  }
+
+  export async function updatePhonebook(phonebookId: string, payload: any): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.phonebook.updatePhonebook(phonebookId, payload);
+  }
+
+  export async function deletePhonebook(phonebookId: string): Promise<any> {
+    const service = new CampaignService(getHttpClient());
+    return service.phonebook.deletePhonebook(phonebookId);
+  }
 
 /**
  * Fetch sender IDs directly without instantiating SenderIdService.
@@ -150,7 +211,7 @@ export async function fetchSenderIds(
  * @returns Promise resolving to sender ID request response
  */
 export async function requestSenderId(
-  payload: SenderIdReqParam
+  payload: Expand<SenderIdReqParam>
 ): Promise<SenderIdRequestResponse> {
   const service = new SenderIdService(getHttpClient());
   return service.requestSenderId(payload);
@@ -162,10 +223,70 @@ export async function requestSenderId(
  * @returns Promise resolving to SendTokenResponse
  */
 export async function sendToken(
-  payload: SendTokenRequest
+  payload: Expand<SendTokenRequest>
 ): Promise<SendTokenResponse> {
   const service = new TokenService(getHttpClient());
   return service.sendToken(payload);
+}
+
+/**
+ * Send OTP token directly without instantiating TokenService.
+ * @param payload SendEmailTokenRequest
+ * @returns Promise resolving to SendEmailTokenResponse
+ */
+export async function sendEmailToken(
+  payload: Expand<SendEmailTokenRequest>
+): Promise<SendEmailTokenResponse> {
+  const service = new TokenService(getHttpClient());
+  return service.email.sendEmailToken(payload);
+}
+
+/**
+ * Verify token directly without instantiating TokenService.
+ * @param payload VerifyTokenRequest
+ * @returns Promise resolving to VerifyTokenResponse
+ */
+export async function verifyToken(
+  payload: Expand<VerifyTokenRequest>
+): Promise<Expand<VerifyTokenResponse>> {
+  const service = new TokenService(getHttpClient());
+  return service.verify.verifyToken(payload);
+}
+
+/**
+ * Generate inApp token directly without instantiating TokenService.
+ * @param payload InAppTokenRequest
+ * @returns Promise resolving to InAppTokenResponse
+ */
+export async function generateToken(
+  payload: Expand<InAppTokenRequest>
+): Promise<Expand<InAppTokenResponse>> {
+  const service = new TokenService(getHttpClient());
+  return service.inApp.generate(payload);
+}
+
+/**
+ * Send voice OTP token directly without instantiating TokenService.
+ * @param payload VoiceTokenRequest
+ * @returns Promise resolving to VoiceTokenResponse
+ */
+export async function sendVoiceToken(
+  payload: Expand<import("../../types/tokenService.type").VoiceTokenRequest>
+): Promise<import("../../types/tokenService.type").VoiceTokenResponse> {
+  const service = new TokenService(getHttpClient());
+  return service.sendVoiceToken(payload);
+}
+
+/**
+ * Send voice call OTP token directly without instantiating TokenService.
+ * @param payload VoiceCallRequest
+ * @returns Promise resolving to VoiceCallResponse
+ */
+export async function sendVoiceCall(
+  payload: Expand<import("../../types/tokenService.type").VoiceCallRequest>
+): Promise<import("../../types/tokenService.type").VoiceCallResponse> {
+  const service = new TokenService(getHttpClient());
+  return service.sendVoiceCall(payload);
 }
 
 /**
@@ -183,7 +304,7 @@ export async function getBalance(): Promise<BalanceResponse> {
  * @returns Promise resolving to AuthenticateResponse
  */
 export async function authenticateEsim(
-  payload: AuthenticateRequest
+  payload: Expand<AuthenticateRequest>
 ): Promise<AuthenticateResponse> {
   const service = new SotelService(getHttpClient());
   return service.esim.authenticate(payload);
@@ -195,7 +316,7 @@ export async function authenticateEsim(
  * @returns Promise resolving to FetchPlansResponse
  */
 export async function fetchEsimPlans(
-  payload: EsimPlanRequest
+  payload: Expand<EsimPlanRequest>
 ): Promise<EsimPlanResponse> {
   const service = new SotelService(getHttpClient());
   return service.esim.fetchPlans(payload);
@@ -207,7 +328,7 @@ export async function fetchEsimPlans(
  * @returns Promise resolving to CreateEsimResponse
  */
 export async function createEsim(
-  payload: CreateEsimRequest
+  payload: Expand<CreateEsimRequest>
 ): Promise<CreateEsimResponse> {
   const service = new SotelService(getHttpClient());
   return service.esim.createEsim(payload);

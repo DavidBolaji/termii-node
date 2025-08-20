@@ -21,13 +21,14 @@ export class VerifyTokenService {
    * @returns Expanded `VerifyTokenResponse` with verification status
    */
   async verifyToken(
-    payload: VerifyTokenRequest
+    payload: Expand<VerifyTokenRequest>
   ): Promise<Expand<VerifyTokenResponse>> {
     return this.http.request<Expand<VerifyTokenResponse>>(
       "/sms/otp/verify",
       {
         method: "POST",
-        data: payload
+        data: payload,
+        authLocation: "body"
       }
     );
   }
