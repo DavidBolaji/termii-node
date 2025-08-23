@@ -1,7 +1,31 @@
 {
   "name": "@davidbolaji/termii-node",
   "version": "1.0.2",
+  "description": "Node.js SDK for Termii API – send SMS, voice, OTP, and manage messaging with ease.",
   "sideEffects": false,
+    "keywords": [
+    "termii",
+    "termii sdk typescript",
+    "termii api",
+    "sms api",
+    "sms gateway",
+    "otp verification",
+    "voice api",
+    "messaging",
+    "bulk sms",
+    "termii nodejs",
+    "node sdk",
+    "termii sms",
+    "termii otp"
+  ],
+   "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidbolaji/termii-node.git"
+  },
+  "homepage": "https://github.com/davidbolaji/termii-node#readme",
+  "bugs": {
+    "url": "https://github.com/davidbolaji/termii-node/issues"
+  },
   "exports": {
     ".": {
       "import": {
