@@ -65,7 +65,7 @@ const response = await sendMessage({
 ### Messaging
 
 ```ts
-const single = await client.sendMessage({
+const single = await client.message.sendMessage({
   to: '+2348012345678',
   from: 'SENDERID',
   sms: 'Hello world',
@@ -122,7 +122,6 @@ const senderIds = await client.sender.fetchSenderIds(1);
 
 ```ts
 const otp = await client.token.sendToken({
-  api_key: 'YOUR_API_KEY',
   to: '2348012345678',
   from: 'SENDERID',
   channel: 'whatsapp',
@@ -190,7 +189,7 @@ const esimPlans = await client.sotel.esim.fetchPlans({
       });
     }
   }
-```
+  ```
 ---
 
 ## Contributing
@@ -202,3 +201,5 @@ Contributions welcome! Please open issues or pull requests.
 ## License
 
 MIT
+
+---
